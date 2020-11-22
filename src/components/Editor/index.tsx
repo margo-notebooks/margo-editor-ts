@@ -1,0 +1,105 @@
+import React, { useState } from "react";
+import {
+  IMargoCellTree,
+  IMargoCellTreeInternalNode,
+} from "../../model/interfaces";
+import addChildNodeToParent from "../../model/utils/addChildNodeToParent";
+import { addEmptyCell } from "../../model/utils/addNodeToTree";
+import cloneTree from "../../model/utils/cloneTree";
+import deleteNodeWithIDFromTree from "../../model/utils/deleteCellFromTree";
+import emptyCellTree from "../../model/utils/emptyCellTree";
+import emptyLeafNode from "../../model/utils/emptyLeafNode";
+import getCellID from "../../model/utils/getCellID";
+import getNodeByCellID from "../../model/utils/getNodeByCellID";
+import treeToNotebook from "../../model/utils/treeToNotebook";
+import CellTree from "../CellTree";
+import EditorControls from "../EditorControls";
+
+export default function Editor() {
+  const [cellTree, updateCellTree] = useState<IMargoCellTree>(emptyCellTree());
+
+  const addNewCell = () => {
+    updateCellTree((oldTree) => {
+      const newTree = cloneTree(oldTree);
+      addEmptyCell(newTree);
+      return newTree;
+    });
+  };
+
+  const saveAsNotebook = () => {
+    console.log("saveAsNotebook() called");
+    console.log(treeToNotebook(cellTree).toJSON());
+  };
+
+  const addChildCell = (parentCellID: string) => {
+    console.log("AddChildCell() called");
+    const newTree = cloneTree(cellTree);
+
+    const parentNode = getNodeByCellID(newTree.cells, parentCellID);
+    if (!parentNode) {
+      return;
+    }
+    if (!parentNode.hasOwnProperty("children")) {
+      return;
+    }
+    const childNode = emptyLeafNode(parentCellID);
+
+    // childNode.cell.value.text =
+    //   childNode.cell.value.text +
+    //   `# :: rel.childOf: "${getCellID(parentNode)}" ::\n`;
+
+    addChildNodeToParent(parentNode as IMargoCellTreeInternalNode, childNode);
+
+    // addNewChildNodeToParentWithId(newTree, parentCellID);
+    updateCellTree(newTree);
+
+    // TODO - Figure out why the below approach fails (generates two)
+    // new cells each time. For now, the approach above works just fine
+
+    // updateCellTree((oldTree) => {
+    //   const newTree = cloneTree(oldTree);
+    //   console.log(new Date(), "Adding child cell to parent cell", parentCellID);
+
+    //   addNewChildNodeToParentWithId(newTree, parentCellID);
+
+    //   return newTree;
+    // });
+  };
+
+  const deleteCell = (cellID: string) => {
+    console.log("deleteCell() called", cellID);
+    updateCellTree((oldTree) => {
+      const newTree = deleteNodeWithIDFromTree(cloneTree(oldTree), cellID);
+
+      return newTree;
+    });
+  };
+
+  const reset = () => {
+    console.log("reset() called");
+    updateCellTree(emptyCellTree());
+  };
+
+  const run = () => {
+    console.log("run() called");
+    console.error("run not implemented");
+  };
+
+  console.log("Rendering with cellTree", cellTree.cells.length, cellTree);
+
+  return (
+    <div className="MargoEditor">
+      <EditorControls
+        handleRunNotebook={run}
+        handleAddNewCell={addNewCell}
+        handleReset={reset}
+        handleSave={saveAsNotebook}
+      />
+      <CellTree
+        handleDeleteCell={deleteCell}
+        handleAddChildCell={addChildCell}
+        cellTree={cellTree}
+      />
+    </div>
+  );
+}
