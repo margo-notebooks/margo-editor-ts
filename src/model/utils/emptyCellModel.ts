@@ -1,9 +1,9 @@
-import { CellModel } from "@jupyterlab/cells";
+import { CodeCellModel } from "@jupyterlab/cells";
 
 export default function emptyCellModel() {
-    const ret = new CellModel({
+    const ret = new CodeCellModel({
         cell: {
-            cell_type: "source",
+            cell_type: "code",
             source: "",
             metadata: {}
         }

@@ -1,4 +1,4 @@
-import { IMargoCellTree, IMargoCellTreeInternalNode, IMargoCellTreeLeafNode, IMargoCellTreeNode } from "../interfaces";
+import { IMargoCellTree, IMargoCellTreeInternalNode, IMargoCellTreeLeafNode } from "../interfaces";
 import addChildNodeToParent from "./addChildNodeToParent";
 import emptyLeafNode from "./emptyLeafNode";
 import getCellID from "./getCellID";
@@ -18,8 +18,15 @@ export function addChildNodeToParentWithID(cellTree: IMargoCellTree, parentCellI
     }
 }
 
-export function addNewChildNodeToParentWithId(cellTree: IMargoCellTree, parentCellID: string) {
-    const newChildNode = emptyLeafNode(parentCellID)
+// export function addNewChildNodeToParentWithId(cellTree: IMargoCellTree, parentCellID: string) {
+//     const newChildNode = emptyLeafNode(parentCellID)
+//     console.log("adding new child with id", newChildNode.cell.id)
+//     addChildNodeToParentWithID(cellTree, parentCellID, newChildNode)
+// }
+
+
+export function addNewChildNodeToParentWithId(cellTree: IMargoCellTree, parentNode: IMargoCellTreeInternalNode) {
+    const newChildNode = emptyLeafNode(parentNode)
     console.log("adding new child with id", newChildNode.cell.id)
-    addChildNodeToParentWithID(cellTree, parentCellID, newChildNode)
+    addChildNodeToParentWithID(cellTree, getCellID(parentNode), newChildNode)
 }

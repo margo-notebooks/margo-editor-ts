@@ -1,4 +1,4 @@
-import { IMargoCellTree, IMargoCellTreeInternalNode, IMargoCellTreeLeafNode, IMargoCellTreeNode } from "../interfaces";
+import { IMargoCellTree, IMargoCellTreeInternalNode, IMargoCellTreeLeafNode } from "../interfaces";
 import emptyCellTree from "./emptyCellTree";
 import getCellID from "./getCellID";
 

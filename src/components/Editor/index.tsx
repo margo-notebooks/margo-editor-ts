@@ -9,7 +9,7 @@ import cloneTree from "../../model/utils/cloneTree";
 import deleteNodeWithIDFromTree from "../../model/utils/deleteCellFromTree";
 import emptyCellTree from "../../model/utils/emptyCellTree";
 import emptyLeafNode from "../../model/utils/emptyLeafNode";
-import getCellID from "../../model/utils/getCellID";
+// import getCellID from "../../model/utils/getCellID";
 import getNodeByCellID from "../../model/utils/getNodeByCellID";
 import treeToNotebook from "../../model/utils/treeToNotebook";
 import CellTree from "../CellTree";
@@ -37,12 +37,15 @@ export default function Editor() {
 
     const parentNode = getNodeByCellID(newTree.cells, parentCellID);
     if (!parentNode) {
+      console.warn("addChildCell: parent not found");
       return;
     }
     if (!parentNode.hasOwnProperty("children")) {
+      console.warn("parentNode not a parent");
       return;
     }
-    const childNode = emptyLeafNode(parentCellID);
+    // const childNode = emptyLeafNode(parentCellID);
+    const childNode = emptyLeafNode(parentNode as IMargoCellTreeInternalNode);
 
     // childNode.cell.value.text =
     //   childNode.cell.value.text +

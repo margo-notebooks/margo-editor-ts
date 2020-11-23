@@ -2,7 +2,7 @@ import React from "react";
 import { IMargoCellTreeInternalNode } from "../../../model/interfaces";
 import getCellID from "../../../model/utils/getCellID";
 import Cell from "../Cell";
-import CellClusterControls from "./CellClusterControls";
+// import CellClusterControls from "./CellClusterControls";
 import styles from "./CellCluster.module.css";
 import ControlBar from "../../common/ControlBar";
 import Button from "../../common/Button";

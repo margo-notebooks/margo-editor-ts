@@ -1,11 +1,12 @@
 import { CellModel, ICellModel } from "@jupyterlab/cells";
 import { IMargoCellTree, IMargoCellTreeInternalNode, IMargoCellTreeLeafNode, IMargoCellTreeNode } from "../interfaces";
+import getCellID from "./getCellID";
 
 function flattenLeafNode(leafNode: IMargoCellTreeLeafNode): Array<ICellModel> {
-    const { parentCellID, relationshipLabel } = leafNode
+    const { parentNode, relationshipLabel } = leafNode
     const newCell = new CellModel({ cell: leafNode.cell.toJSON() })
     newCell.value.text = `# :: cell.id: '${newCell.id}' ::\n` +
-        `# :: rel.${relationshipLabel}: "${parentCellID}" ::\n` +
+        `# :: rel.${relationshipLabel}: "${getCellID(parentNode)}" ::\n` +
         `${newCell.value.text}\n`;
 
     // return [leafNode.cell];

@@ -1,9 +1,16 @@
+import { ICellModel } from "@jupyterlab/cells";
 import { IMargoCellTreeInternalNode } from "../interfaces";
 import emptyCellModel from "./emptyCellModel";
 
-export default function emptInternalNode(): IMargoCellTreeInternalNode {
+export function internalNodeFromCell(cell: ICellModel): IMargoCellTreeInternalNode {
     return {
-        cell: emptyCellModel(),
+        id: cell.id.split("-")[0],
+        cell,
         children: []
     }
+
+}
+
+export default function emptInternalNode(): IMargoCellTreeInternalNode {
+    return internalNodeFromCell(emptyCellModel())
 }

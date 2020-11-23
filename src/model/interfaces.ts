@@ -7,6 +7,7 @@ export interface IMargoCellTree {
 
 export interface IMargoCellTreeNode {
     cell: ICellModel
+    id: string
 }
 
 export interface IMargoCellTreeInternalNode extends IMargoCellTreeNode {
@@ -17,7 +18,7 @@ export interface IMargoCellTreeInternalNode extends IMargoCellTreeNode {
 }
 
 export interface IMargoCellTreeLeafNode extends IMargoCellTreeNode {
-    parentCellID: string;
-    relationshipLabel: string
-
+    // parentCellID: string;
+    parentNode: IMargoCellTreeInternalNode;
+    relationshipLabel: string;
 }

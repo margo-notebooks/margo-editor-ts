@@ -1,8 +1,8 @@
 import { IMargoCellTreeInternalNode } from "../interfaces";
 import addChildNodeToParent from "./addChildNodeToParent";
 import emptyLeafNode from "./emptyLeafNode";
-import getCellID from "./getCellID";
+// import getCellID from "./getCellID";
 
 export default function addNewChildNodeToParent(parentNode: IMargoCellTreeInternalNode) {
-    addChildNodeToParent(parentNode, emptyLeafNode(getCellID(parentNode)))
+    addChildNodeToParent(parentNode, emptyLeafNode(parentNode))
 }
