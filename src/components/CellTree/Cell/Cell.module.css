@@ -4,6 +4,7 @@
     /* background-color: #efefef; */
     /* box-sizing: border-box; */
     overflow: hidden;
+    width: 100%;
 }
 
 .Cell.Collapsed {

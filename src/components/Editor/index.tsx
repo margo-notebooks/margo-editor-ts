@@ -29,6 +29,16 @@ export default function Editor() {
   const saveAsNotebook = () => {
     console.log("saveAsNotebook() called");
     console.log(treeToNotebook(cellTree).toJSON());
+
+    const storageObj = treeToNotebook(cellTree);
+
+    var dataStr =
+      "data:text/json;charset=utf-8," +
+      encodeURIComponent(JSON.stringify(storageObj));
+    var dlAnchorElem = document.createElement("a");
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", "notebook.ipynb");
+    dlAnchorElem.click();
   };
 
   const addChildCell = (parentCellID: string) => {

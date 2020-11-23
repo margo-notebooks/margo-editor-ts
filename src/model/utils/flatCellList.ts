@@ -16,7 +16,7 @@ function flattenLeafNode(leafNode: IMargoCellTreeLeafNode): Array<ICellModel> {
 function flattenInternal(parentNode: IMargoCellTreeInternalNode): Array<ICellModel> {
     const newCell = new CellModel({ cell: parentNode.cell.toJSON() })
     // let ret: Array<ICellModel> = [parentNode.cell]
-    newCell.value.text = `# :: cell.id: '${newCell.id}' ::\n` +
+    newCell.value.text = `# :: cell.id: '${parentNode.id}' ::\n` +
         `${newCell.value.text}\n`;
     let ret: Array<ICellModel> = [newCell]
 
