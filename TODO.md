@@ -6,6 +6,6 @@
 - [x] Add Monaco Editor
 - [ ] Add Markdown cell type and toggle
 - [x] Add .ipynb download to save command instead of just console.logging
-- [ ] Figure out why cell_type remains undefined
-- [ ] Set notebook language
+- [x] Figure out why cell_type remains undefined
+- [x] Set notebook language
 - [ ] Create collapsed representation
