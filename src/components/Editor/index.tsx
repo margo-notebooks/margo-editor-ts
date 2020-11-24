@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { RefObject, useRef, useState } from "react";
 import {
   IMargoCellTree,
   IMargoCellTreeInternalNode,
@@ -17,6 +17,10 @@ import EditorControls from "../EditorControls";
 
 export default function Editor() {
   const [cellTree, updateCellTree] = useState<IMargoCellTree>(emptyCellTree());
+  const [notebookName, updateNotebookName] = useState<string>(
+    "Untitled Notebook"
+  );
+  const notebookNameRef: RefObject<HTMLDivElement> = useRef(null);
 
   const addNewCell = () => {
     updateCellTree((oldTree) => {
@@ -37,7 +41,7 @@ export default function Editor() {
       encodeURIComponent(JSON.stringify(storageObj));
     var dlAnchorElem = document.createElement("a");
     dlAnchorElem.setAttribute("href", dataStr);
-    dlAnchorElem.setAttribute("download", "notebook.ipynb");
+    dlAnchorElem.setAttribute("download", `${notebookName}.ipynb`);
     dlAnchorElem.click();
   };
 
@@ -102,6 +106,19 @@ export default function Editor() {
 
   return (
     <div className="MargoEditor">
+      <div>
+        <h1
+          ref={notebookNameRef}
+          contentEditable
+          onBlur={(e) => {
+            updateNotebookName(
+              notebookNameRef.current?.innerText || "Untitled Notebook"
+            );
+          }}
+        >
+          {notebookName}
+        </h1>
+      </div>
       <EditorControls
         handleRunNotebook={run}
         handleAddNewCell={addNewCell}
