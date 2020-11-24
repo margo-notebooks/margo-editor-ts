@@ -4,6 +4,7 @@ import Measure from "react-measure";
 import React, { RefObject, useEffect, useRef, useState } from "react";
 import * as monaco from "monaco-editor";
 import getNewEditor, { updateSize } from "./utils/getNewEditor";
+import styles from "./CellEditor.module.css";
 
 export interface CellEditorProps {
   cell: ICellModel;
@@ -15,7 +16,7 @@ export default function CellEditor(props: CellEditorProps) {
   const ref: RefObject<HTMLDivElement> = useRef(null);
   const [width, setWidth] = useState<number>(-1);
 
-  const { cell, updateText } = props;
+  const { cell } = props;
 
   useEffect(() => {
     if (!ref.current) return;
@@ -41,7 +42,7 @@ export default function CellEditor(props: CellEditorProps) {
       // TODO - evaluate this cleanup routine. Esepcially unsetting the editor
       setEditor(undefined);
     };
-  }, [ref]);
+  }, [cell.metadata, cell.value.text, props.cell.value, ref]);
 
   /**
    * Auto-update the width
@@ -63,7 +64,7 @@ export default function CellEditor(props: CellEditorProps) {
       }}
     >
       {({ measureRef }) => (
-        <div ref={measureRef}>
+        <div className={styles.CodeEditor} ref={measureRef}>
           <div ref={ref}></div>
         </div>
       )}

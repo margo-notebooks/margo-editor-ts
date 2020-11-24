@@ -1,10 +1,13 @@
-import { CellModel, ICellModel } from "@jupyterlab/cells";
+import { ICellModel } from "@jupyterlab/cells";
 import { IMargoCellTree, IMargoCellTreeInternalNode, IMargoCellTreeLeafNode, IMargoCellTreeNode } from "../interfaces";
+import cloneCell from "./cloneCell";
 import getCellID from "./getCellID";
 
 function flattenLeafNode(leafNode: IMargoCellTreeLeafNode): Array<ICellModel> {
     const { parentNode, relationshipLabel } = leafNode
-    const newCell = new CellModel({ cell: leafNode.cell.toJSON() })
+    // const newCell = new CellModel({ cell: leafNode.cell.toJSON() })
+    const newCell = cloneCell(leafNode.cell)
+    console.log("Flattening leaf node ", leafNode.cell.toJSON(), newCell.toJSON())
     newCell.value.text = `# :: cell.id: '${newCell.id}' ::\n` +
         `# :: rel.${relationshipLabel}: "${getCellID(parentNode)}" ::\n` +
         `${newCell.value.text}\n`;
@@ -14,7 +17,8 @@ function flattenLeafNode(leafNode: IMargoCellTreeLeafNode): Array<ICellModel> {
 }
 
 function flattenInternal(parentNode: IMargoCellTreeInternalNode): Array<ICellModel> {
-    const newCell = new CellModel({ cell: parentNode.cell.toJSON() })
+    // const newCell = new CellModel({ cell: parentNode.cell.toJSON() })
+    const newCell = cloneCell(parentNode.cell)
     // let ret: Array<ICellModel> = [parentNode.cell]
     newCell.value.text = `# :: cell.id: '${parentNode.id}' ::\n` +
         `${newCell.value.text}\n`;

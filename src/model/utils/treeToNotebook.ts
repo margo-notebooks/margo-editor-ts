@@ -4,7 +4,7 @@ import flattenedCellArray from "./flatCellList";
 
 export default function treeToNotebook(tree: IMargoCellTree, notebook?: INotebookModel): INotebookModel {
 
-    let ret = notebook ? notebook : new NotebookModel();
+    let ret = notebook ? notebook : new NotebookModel({ languagePreference: "python" });
     ret.cells.removeRange(0, ret.cells.length)
     ret.cells.insertAll(0, flattenedCellArray(tree))
 

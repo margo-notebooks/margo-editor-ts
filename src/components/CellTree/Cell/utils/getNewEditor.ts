@@ -19,11 +19,11 @@ export default function getNewEditor(el: HTMLDivElement, initialValue?: string, 
             language:
                 language || "python",
             glyphMargin: false,
-            lineHeight: 17,
             scrollbar: {
                 vertical: "hidden",
                 handleMouseWheel: false,
             },
+            fontSize: 19,
             scrollBeyondLastLine: false,
             minimap: {
                 enabled: false,

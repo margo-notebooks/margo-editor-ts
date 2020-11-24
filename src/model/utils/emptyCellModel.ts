@@ -11,7 +11,7 @@ export default function emptyCellModel() {
 
     // ret.value.text = `# :: cell.id: '${ret.id}' ::\n`
     // ret.value.text = `# placeholder source code for cell '${ret.id}' ::\n`
-    ret.value.text = `# HELLO`
+    ret.value.text = ``
     // console.log("Generated new cell model", ret.id)
     return ret;
 }
