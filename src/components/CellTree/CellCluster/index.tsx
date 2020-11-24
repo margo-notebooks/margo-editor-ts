@@ -19,11 +19,6 @@ export interface CellClusterProps {
 export default function CellCluster(props: CellClusterProps) {
   return (
     <div className={styles.CellCluster}>
-      {/* <CellClusterControls
-        handleAddChildCell={() =>
-          props.handleAddChildCell(getCellID(props.node))
-        }
-      /> */}
       <ControlBar>
         <Button
           icon={<FontAwesomeIcon icon={faPlus} />}

@@ -7,6 +7,7 @@ import {
 // import CellControls from "./CellControls";
 import styles from "./Cell.module.css";
 import CellEditor from "./CellEditor";
+import EditableCellLabel from "./EditableCellLabel";
 
 export interface CellProps {
   node: IMargoCellTreeNode;
@@ -18,25 +19,31 @@ export default function Cell(props: CellProps) {
 
   return (
     <div className={`${styles.Cell} ${collapsed ? styles.Collapsed : ""}`}>
+      <EditableCellLabel
+        text={props.node.id}
+        onChange={(text: string) => {
+          console.log("Updating cell id", text);
+          props.node.id = text || props.node.cell.id.split("-")[0];
+        }}
+      />
       <div className={styles.CodeArea}>
         <pre>
           {props.node.hasOwnProperty("relationshipLabel")
             ? (props.node as IMargoCellTreeLeafNode).relationshipLabel
             : null}
         </pre>
-        <pre>
+        {/* <pre>
           cell-id:{" "}
           <input
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               if (e.target.value) {
-                console.log("Updating", e.target.value);
                 props.node.id = e.target.value as string;
               }
             }}
             type="text"
             placeholder={props.node.id}
           ></input>
-        </pre>
+        </pre> */}
         <CellEditor
           updateText={() => {
             console.warn("updateText not implemented");

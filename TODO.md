@@ -9,3 +9,5 @@
 - [x] Figure out why cell_type remains undefined
 - [x] Set notebook language
 - [ ] Create collapsed representation
+- [ ] Add syntax highlighting
+- [ ] Resize on expand/collapse events

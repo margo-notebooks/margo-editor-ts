@@ -1,0 +1,24 @@
+.EditableCellLabel {
+    background-color: black;
+    display: inline-block;
+}
+
+.Label {
+    border: 1px solid transparent;
+    padding-right: 1em;
+    color: white;
+    font-weight: 900;
+}
+.Label.Highlight{
+    background-color:yellow;
+    /* border-color: black; */
+    color: black;
+}
+
+.EditableCellLabel .ButtonContainer {
+    visibility: hidden;
+}
+
+.EditableCellLabel:hover .ButtonContainer {
+    visibility: visible;
+}

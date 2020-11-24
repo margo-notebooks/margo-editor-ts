@@ -8,7 +8,7 @@ function flattenLeafNode(leafNode: IMargoCellTreeLeafNode): Array<ICellModel> {
     // const newCell = new CellModel({ cell: leafNode.cell.toJSON() })
     const newCell = cloneCell(leafNode.cell)
     console.log("Flattening leaf node ", leafNode.cell.toJSON(), newCell.toJSON())
-    newCell.value.text = `# :: cell.id: '${newCell.id}' ::\n` +
+    newCell.value.text = `# :: cell.id: '${leafNode.id}' ::\n` +
         `# :: rel.${relationshipLabel}: "${getCellID(parentNode)}" ::\n` +
         `${newCell.value.text}\n`;
 
