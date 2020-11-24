@@ -107,17 +107,20 @@ export default function Editor() {
   return (
     <div className="MargoEditor">
       <div>
-        <h1
-          ref={notebookNameRef}
-          contentEditable
-          onBlur={(e) => {
-            updateNotebookName(
-              notebookNameRef.current?.innerText || "Untitled Notebook"
-            );
-          }}
-        >
-          {notebookName}
-        </h1>
+        <h3>
+          <span
+            ref={notebookNameRef}
+            contentEditable
+            onBlur={(e) => {
+              updateNotebookName(
+                notebookNameRef.current?.innerText || "Untitled Notebook"
+              );
+            }}
+          >
+            {notebookName}
+          </span>
+          <span>.ipynb</span>
+        </h3>
       </div>
       <EditorControls
         handleRunNotebook={run}
