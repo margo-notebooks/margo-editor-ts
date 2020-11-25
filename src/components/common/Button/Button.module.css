@@ -16,7 +16,8 @@ button.Button {
 button.Button.Small{
     /* width: 32px; */
     /* height: 16px; */
-    font-size: 16px;
+    /* width: unset; */
+    font-size: 12px;
 }
 
 button.Button:hover{

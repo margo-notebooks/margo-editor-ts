@@ -2,6 +2,8 @@ import React, { RefObject, useRef, useState } from "react";
 import {
   IMargoCellTree,
   IMargoCellTreeInternalNode,
+  IMargoCellTreeLeafNode,
+  IMargoCellTreeNode,
 } from "../../model/interfaces";
 import addChildNodeToParent from "../../model/utils/addChildNodeToParent";
 import { addEmptyCell } from "../../model/utils/addNodeToTree";
@@ -11,6 +13,12 @@ import emptyCellTree from "../../model/utils/emptyCellTree";
 import emptyLeafNode from "../../model/utils/emptyLeafNode";
 // import getCellID from "../../model/utils/getCellID";
 import getNodeByCellID from "../../model/utils/getNodeByCellID";
+import { isAChildNode, isAParentNode } from "../../model/utils/isA";
+import {
+  getNodeIndex,
+  moveNode,
+  moveNodeWithinTree,
+} from "../../model/utils/moveNode";
 import treeToNotebook from "../../model/utils/treeToNotebook";
 import CellTree from "../CellTree";
 import EditorControls from "../EditorControls";
@@ -20,14 +28,24 @@ export default function Editor() {
   const [notebookName, updateNotebookName] = useState<string>(
     "Untitled Notebook"
   );
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const notebookNameRef: RefObject<HTMLDivElement> = useRef(null);
 
+  const forceRefresh = () => setLastUpdated(new Date());
   const addNewCell = () => {
     updateCellTree((oldTree) => {
       const newTree = cloneTree(oldTree);
       addEmptyCell(newTree);
       return newTree;
     });
+  };
+
+  const moveCellUp = (node: IMargoCellTreeNode) => {
+    updateCellTree((oldTree) => moveNodeWithinTree(oldTree, node, "up"));
+  };
+
+  const moveCellDown = (node: IMargoCellTreeNode) => {
+    updateCellTree((oldTree) => moveNodeWithinTree(oldTree, node, "down"));
   };
 
   const saveAsNotebook = () => {
@@ -131,6 +149,8 @@ export default function Editor() {
         handleSave={saveAsNotebook}
       />
       <CellTree
+        handleMoveCellUp={moveCellUp}
+        handleMoveCellDown={moveCellDown}
         handleDeleteCell={deleteCell}
         handleAddChildCell={addChildCell}
         cellTree={cellTree}

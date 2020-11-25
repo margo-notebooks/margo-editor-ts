@@ -1,0 +1,50 @@
+.CollapsibleCell {
+/* border: 1px solid gray; */
+border: 1px solid transparent
+}
+/* 
+.CollapsibleCell:hover {
+    /* border-top: 1px solid gray; */
+    /* border-left-width: 0;
+    border-right-width: 0; */
+/* }  */
+
+/* .Contents{
+    flex: 1;
+    display: flex;
+} */
+
+.Controls{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    opacity: 0;
+}
+
+.CollapsibleCell:hover .Controls{
+    opacity: 1;
+}
+
+.ControlsAndCellContainer{
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.Controls{
+    flex-shrink: 1;
+}
+
+.ControlsTop {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 1em;
+
+}
+
+.CellFlexContainer{
+    flex: 1;
+    padding-right: 2em;
+}

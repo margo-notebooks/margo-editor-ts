@@ -21,7 +21,7 @@ export default function ChildCell(props: ChildCellProps) {
   const { node, handleDelete } = props;
   return (
     <div className={styles.ChildCell}>
-      <CellWrapper node={node}>
+      <CellWrapper handleDelete={handleDelete} node={node}>
         <EditableCellLabel
           inverted
           onChange={() => {}}

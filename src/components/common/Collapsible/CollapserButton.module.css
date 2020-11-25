@@ -1,0 +1,7 @@
+.CollapserButton {
+    transition: transform 0.2s ease-in;
+
+}
+.CollapserButton.Open{
+    transform: rotate(90deg);
+}

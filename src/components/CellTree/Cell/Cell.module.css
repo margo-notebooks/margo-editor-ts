@@ -5,6 +5,8 @@
     /* box-sizing: border-box; */
     overflow: hidden;
     width: 100%;
+    border: 1px solid #efefef;
+    box-sizing: border-box;
 }
 
 .Cell.Collapsed {
@@ -13,6 +15,6 @@
 }
 
 .CodeArea {
-margin: 10px;
-    font-size: 20px;
+/* margin: 10px; */
+    /* font-size: 20px; */
 }

@@ -23,6 +23,7 @@ export default function getNewEditor(el: HTMLDivElement, initialValue?: string, 
                 vertical: "hidden",
                 handleMouseWheel: false,
             },
+            lineNumbers: "off",
             fontSize: 19,
             scrollBeyondLastLine: false,
             minimap: {

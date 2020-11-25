@@ -1,6 +1,12 @@
 .CellWrapper {
-    border-left: 10px solid black
+    /* border-left: 10px solid black */
+    /* border: 1px solid gray; */
+
 }
+
+/* .CellWrapper:hover {
+    border-color: gray;
+} */
 
 
 .Rotator {
@@ -9,4 +15,20 @@
 }
 .Rotate90{
     transform: rotate(90deg);
+}
+
+.CellWrapper:hover .CellControlBar {
+    opacity: 1;
+
+}
+
+.CellControlBar {
+    opacity: 0;
+    display: flex;
+    justify-content: right;
+    /* border: 1px solid #efefef; */
+    /* background-color: #999; */
+    padding-bottom: 3px;
+    border-bottom: 5px solid #ddd;
+    margin-bottom: 5px;
 }

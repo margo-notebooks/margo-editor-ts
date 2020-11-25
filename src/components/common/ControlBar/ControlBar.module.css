@@ -1,5 +1,7 @@
 .ControlBar {
-    /* display: flex; */
+    /* width: 100%;
+    display: flex; 
+    justify-content: right; */
     /* border-bottom: 3px double black; */
     /* justify-content: center; */
 }

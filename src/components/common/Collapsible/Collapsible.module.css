@@ -1,0 +1,69 @@
+.Collapsible {
+    display: flex
+}
+
+.Contents{
+    flex: 1;
+}
+
+.Collapsible.Closed .ChildArea {
+    display: none;
+}
+
+.ChildArea {
+    /* border-left: 10px solid black; */
+}
+
+.ControlArea {
+    display: flex;
+    flex-direction: column;
+    padding: 0 3px;
+}
+
+.Top {
+    border: none;
+}
+.Bottom {
+    flex: 1;
+}
+
+.ConnectorEdge {
+    height: 100%;
+}
+
+.ConnectorEdgeInner {
+    height: 100%;
+    width: 50%;
+    border-right: 1px dotted #efefef;
+    transition: border-color 0.5s ease-in;
+
+}
+
+.Collapsible:hover .ConnectorEdgeInner {
+    border-color: black;
+}
+
+.Collapsible.Open .Label {
+    background-color: black;
+    color: white;
+}
+
+.Collapsible.Closed .Label{
+    background-color: white;
+    color: black;
+}
+.Label {
+    transition: background-color 0.5s ease;
+    font-size: 0.5em;
+    font-weight: 900;
+    height: 1em;
+    padding: 0.5em;
+    padding-top: 0.4em;
+    /* background-color: black; */
+    /* padding: 0.2em 1em; */
+    vertical-align: middle;
+    /* color: white; */
+    border-radius: 0.5em;
+    display: inline-block;
+    margin-left: 1em;
+}
