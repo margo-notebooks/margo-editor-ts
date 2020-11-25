@@ -119,7 +119,9 @@ export default function Editor() {
           >
             {notebookName}
           </span>
-          <span>.ipynb</span>
+          <span>
+            <small>.margo.ipynb</small>
+          </span>
         </h3>
       </div>
       <EditorControls
