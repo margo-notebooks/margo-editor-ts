@@ -9,8 +9,14 @@ button.Button {
     /* margin: 0 3px; */
     margin-right: 3px;
     margin-bottom: 3px;
-    height: 3em;
+    /* height: 3em; */
     width: 3em;
+}
+
+button.Button.Small{
+    /* width: 32px; */
+    /* height: 16px; */
+    font-size: 16px;
 }
 
 button.Button:hover{

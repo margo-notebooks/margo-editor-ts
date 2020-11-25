@@ -1,33 +1,29 @@
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEdit } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { RefObject, useRef, useState } from "react";
-import Button from "../../common/Button";
+// import Button from "../../common/Button";
 import styles from "./EditableCellLabel.module.css";
 
 export interface EditableCellLabelProps {
   text: string;
   onChange: (text: string) => void;
+  inverted?: boolean;
 }
 
 export default function EditableCellLabel(props: EditableCellLabelProps) {
-  const { text, onChange } = props;
+  const { text, onChange, inverted } = props;
   const labelRef: RefObject<HTMLDivElement> = useRef(null);
   const [editMode, setEditMode] = useState<boolean>(false);
 
   return (
     <div
-      //   onClick={function () {
-      //     labelRef.current?.focus();
-      //     if (editMode) {
-      //       labelRef.current?.blur();
-      //     }
-      //     setEditMode(!editMode);
-      //   }}
-      className={styles.EditableCellLabel}
+      className={`${styles.EditableCellLabel} ${
+        inverted ? styles.Inverted : ""
+      }`}
     >
-      <span className={styles.ButtonContainer}>
-        <FontAwesomeIcon icon={faEdit} />
-        {/* <Button
+      {/* <span className={styles.ButtonContainer}> */}
+      {/* <FontAwesomeIcon icon={faEdit} /> */}
+      {/* <Button
           onClick={function () {
             labelRef.current?.focus();
             if (editMode) {
@@ -37,7 +33,7 @@ export default function EditableCellLabel(props: EditableCellLabelProps) {
           }}
           icon={<FontAwesomeIcon icon={faEdit} />}
         ></Button> */}
-      </span>
+      {/* </span> */}
       <span
         onKeyUp={(e: React.KeyboardEvent<HTMLSpanElement>) => {
           onChange(labelRef.current?.innerText || "");

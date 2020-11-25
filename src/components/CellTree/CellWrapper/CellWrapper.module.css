@@ -1,0 +1,12 @@
+.CellWrapper {
+    border-left: 10px solid black
+}
+
+
+.Rotator {
+    transition: transform 0.2s ease-in;
+
+}
+.Rotate90{
+    transform: rotate(90deg);
+}

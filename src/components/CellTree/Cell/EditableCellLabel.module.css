@@ -1,12 +1,20 @@
 .EditableCellLabel {
     background-color: black;
+    color: white;
     display: inline-block;
+    min-width: 130px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.EditableCellLabel.Inverted {
+    background-color: white;
+    color: black;
 }
 
 .Label {
     border: 1px solid transparent;
     padding-right: 1em;
-    color: white;
     font-weight: 900;
 }
 .Label.Highlight{
