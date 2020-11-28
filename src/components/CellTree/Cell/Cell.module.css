@@ -18,3 +18,7 @@
 /* margin: 10px; */
     /* font-size: 20px; */
 }
+
+.Cell:focus-within .MarkdownRenderArea{
+    visibility: hidden;
+}

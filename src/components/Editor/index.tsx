@@ -2,23 +2,18 @@ import React, { RefObject, useRef, useState } from "react";
 import {
   IMargoCellTree,
   IMargoCellTreeInternalNode,
-  IMargoCellTreeLeafNode,
   IMargoCellTreeNode,
 } from "../../model/interfaces";
 import addChildNodeToParent from "../../model/utils/addChildNodeToParent";
 import { addEmptyCell } from "../../model/utils/addNodeToTree";
+import { toggleCellType } from "../../model/utils/changeCellType";
 import cloneTree from "../../model/utils/cloneTree";
 import deleteNodeWithIDFromTree from "../../model/utils/deleteCellFromTree";
 import emptyCellTree from "../../model/utils/emptyCellTree";
 import emptyLeafNode from "../../model/utils/emptyLeafNode";
 // import getCellID from "../../model/utils/getCellID";
 import getNodeByCellID from "../../model/utils/getNodeByCellID";
-import { isAChildNode, isAParentNode } from "../../model/utils/isA";
-import {
-  getNodeIndex,
-  moveNode,
-  moveNodeWithinTree,
-} from "../../model/utils/moveNode";
+import { moveNodeWithinTree } from "../../model/utils/moveNode";
 import treeToNotebook from "../../model/utils/treeToNotebook";
 import CellTree from "../CellTree";
 import EditorControls from "../EditorControls";
@@ -28,10 +23,14 @@ export default function Editor() {
   const [notebookName, updateNotebookName] = useState<string>(
     "Untitled Notebook"
   );
-  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+
   const notebookNameRef: RefObject<HTMLDivElement> = useRef(null);
 
-  const forceRefresh = () => setLastUpdated(new Date());
+  const handleToggleCellType = (node: IMargoCellTreeNode) => {
+    node.cell = toggleCellType(node.cell);
+    updateCellTree((oldTree) => cloneTree(oldTree));
+  };
+
   const addNewCell = () => {
     updateCellTree((oldTree) => {
       const newTree = cloneTree(oldTree);
@@ -129,7 +128,7 @@ export default function Editor() {
           <span
             ref={notebookNameRef}
             contentEditable
-            onBlur={(e) => {
+            onBlur={() => {
               updateNotebookName(
                 notebookNameRef.current?.innerText || "Untitled Notebook"
               );
@@ -149,6 +148,7 @@ export default function Editor() {
         handleSave={saveAsNotebook}
       />
       <CellTree
+        handleToggleCellType={handleToggleCellType}
         handleMoveCellUp={moveCellUp}
         handleMoveCellDown={moveCellDown}
         handleDeleteCell={deleteCell}

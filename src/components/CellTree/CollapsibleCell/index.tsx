@@ -9,7 +9,8 @@ import React from "react";
 import { IMargoCellTreeNode } from "../../../model/interfaces";
 import Button from "../../common/Button";
 import Collapsible from "../../common/Collapsible";
-import ParentCell from "../ParentCell";
+import CellWrapper from "../CellWrapper";
+// import ParentCell from "../ParentCell/index.tsx-old";
 import styles from "./CollapsibleCell.module.css";
 
 export interface CollapsibleCellProps {
@@ -18,6 +19,7 @@ export interface CollapsibleCellProps {
   handleDeleteCell: () => void;
   handleMoveCellUp: () => void;
   handleMoveCellDown: () => void;
+  handleToggleCellType: () => void;
   label: string;
 }
 
@@ -31,6 +33,7 @@ const CollapsibleCell: React.FunctionComponent<CollapsibleCellProps> = (
     handleDeleteCell,
     handleMoveCellDown,
     handleMoveCellUp,
+    handleToggleCellType,
   } = props;
 
   return (
@@ -60,8 +63,9 @@ const CollapsibleCell: React.FunctionComponent<CollapsibleCellProps> = (
               </div>
             </div>
             <div className={styles.CellFlexContainer}>
-              <ParentCell
-                handleAddcell={handleAddCell}
+              <CellWrapper
+                handleToggleCellType={handleToggleCellType}
+                // handleAddcell={handleAddCell}
                 handleDelete={handleDeleteCell}
                 node={node}
               />

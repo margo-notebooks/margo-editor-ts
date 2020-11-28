@@ -18,6 +18,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 export interface CellClusterProps {
   node: IMargoCellTreeInternalNode;
   depth?: number;
+  handleToggleCellType: (node: IMargoCellTreeNode) => void;
   handleAddChildCell: (parentCellID: string) => void;
   handleDeleteCell: (cellID: string) => void;
   handleMoveCellUp: (node: IMargoCellTreeNode) => void;
@@ -33,6 +34,7 @@ export default function CellCluster(props: CellClusterProps) {
     <Collapsible collapsedLabel={clusterLabel}>
       <div className={styles.CellCluster}>
         <CollapsibleCell
+          handleToggleCellType={() => props.handleToggleCellType(props.node)}
           node={props.node}
           // label={`cell-id: '${props.node.id}'`}
           label={"Parent Cell"}
@@ -55,6 +57,7 @@ export default function CellCluster(props: CellClusterProps) {
           >
             {props.node.children.map((node, idx) => (
               <CollapsibleCell
+                handleToggleCellType={() => props.handleToggleCellType(node)}
                 handleMoveCellUp={() => {
                   props.handleMoveCellUp(node);
                 }}

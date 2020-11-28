@@ -13,12 +13,17 @@ export interface ParentCellProps {
   node: IMargoCellTreeNode;
   handleDelete: () => void;
   handleAddcell: () => void;
+  handleToggleCellType: () => void;
 }
 
 export default function ParentCell(props: ParentCellProps) {
-  const { node, handleDelete, handleAddcell } = props;
+  const { node, handleDelete, handleToggleCellType } = props;
   return (
-    <CellWrapper handleDelete={handleDelete} node={node}>
+    <CellWrapper
+      handleToggleCellType={handleToggleCellType}
+      handleDelete={handleDelete}
+      node={node}
+    >
       {/* <Button
         onClick={handleDelete}
         icon={<FontAwesomeIcon icon={faTrash} />}

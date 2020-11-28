@@ -1,4 +1,5 @@
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCode, faMarker, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { IMargoCellTreeNode } from "../../../model/interfaces";
@@ -10,10 +11,11 @@ import styles from "./CellWrapper.module.css";
 export interface CellWrapperProps {
   node: IMargoCellTreeNode;
   handleDelete: () => void;
+  handleToggleCellType: () => void;
 }
 
 const CellWrapper: React.FunctionComponent<CellWrapperProps> = (props) => {
-  const { node, handleDelete } = props;
+  const { node, handleDelete, handleToggleCellType } = props;
   return (
     <div className={styles.CellWrapper}>
       <div className={styles.CellControlBar}>
@@ -27,6 +29,16 @@ const CellWrapper: React.FunctionComponent<CellWrapperProps> = (props) => {
           // labelText="Delete cell"
           small
         ></Button>
+        <Button
+          onClick={handleToggleCellType}
+          icon={
+            <div>
+              <FontAwesomeIcon
+                icon={node.cell.type === "code" ? faCode : faMarkdown}
+              />
+            </div>
+          }
+        />
       </div>
 
       <Cell
