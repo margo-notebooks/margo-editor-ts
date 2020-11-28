@@ -1,25 +1,29 @@
-import React from "react";
+import React from 'react'
 import {
-  IMargoCellTree,
-  IMargoCellTreeInternalNode,
-  IMargoCellTreeNode,
-} from "../../model/interfaces";
-import CellCluster from "./CellCluster";
+  IMargoNotebook,
+  IMargoNotebookParentNode,
+  IMargoNotebookNode,
+} from '../../model/interfaces'
+import CellCluster from './CellCluster'
 
 export interface CellTreeProps {
-  cellTree: IMargoCellTree;
-  handleToggleCellType: (node: IMargoCellTreeNode) => void;
-  handleAddChildCell: (parentCellID: string) => void;
-  handleDeleteCell: (cellID: string) => void;
-  handleMoveCellUp: (node: IMargoCellTreeNode) => void;
-  handleMoveCellDown: (node: IMargoCellTreeNode) => void;
+  margoNotebook: IMargoNotebook
+  handleToggleCellType: (node: IMargoNotebookNode) => void
+  handleAddChildCell: (node: IMargoNotebookParentNode) => void
+  handleDeleteCell: (node: IMargoNotebookNode) => void
+  handleMoveCellUp: (node: IMargoNotebookNode) => void
+  handleMoveCellDown: (node: IMargoNotebookNode) => void
 }
 
+/**
+ * Render a Margo Notebook's cells
+ * @param props
+ */
 export default function CellTree(props: CellTreeProps) {
   return (
     <div className="CellTree">
-      {props.cellTree.cells.map(
-        (cellNode: IMargoCellTreeInternalNode, idx: number) => {
+      {props.margoNotebook.nodes.map(
+        (cellNode: IMargoNotebookParentNode, idx: number) => {
           return (
             <CellCluster
               handleToggleCellType={props.handleToggleCellType}
@@ -30,9 +34,9 @@ export default function CellTree(props: CellTreeProps) {
               key={idx}
               node={cellNode}
             />
-          );
+          )
         }
       )}
     </div>
-  );
+  )
 }

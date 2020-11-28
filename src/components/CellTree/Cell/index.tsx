@@ -1,40 +1,31 @@
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import {
-  // IMargoCellTreeLeafNode,
-  IMargoCellTreeNode,
-} from "../../../model/interfaces";
-import { isMarkdownCell } from "../../../model/utils/cloneCell";
-import Button from "../../common/Button";
-// import getCellID from "../../../model/utils/getCellID";
-// import CellControls from "./CellControls";
-import styles from "./Cell.module.css";
-import CellEditor from "./CellEditor";
-// import EditableCellLabel from "./EditableCellLabel";
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import { IMargoNotebookNode } from '../../../model/interfaces'
+import { isAMarkdownCell } from '../../../model/api/isA'
+import Button from '../../common/Button'
+import styles from './Cell.module.css'
+import CellEditor from './CellEditor'
 
 export interface CellProps {
-  node: IMargoCellTreeNode;
-  handleDeleteCell: (cellID: string) => void;
+  node: IMargoNotebookNode
+  handleDeleteCell: (cellID: string) => void
 }
 
+/**
+ * Render a cell, whether its code or markdown. Handle toggling between rendered
+ * and unrendered markdown
+ * @param props
+ */
 export default function Cell(props: CellProps) {
-  const [collapsed] = useState<boolean>(false);
-  const [renderMarkdown, setRenderMarkdown] = useState<boolean>(false);
+  const [collapsed] = useState<boolean>(false)
+  const [renderMarkdown, setRenderMarkdown] = useState<boolean>(false)
 
   return (
-    <div className={`${styles.Cell} ${collapsed ? styles.Collapsed : ""}`}>
-      {/* <EditableCellLabel
-        text={props.node.id}
-        onChange={(text: string) => {
-          console.log("Updating cell id", text);
-          props.node.id = text || props.node.cell.id.split("-")[0];
-        }}
-      /> */}
-
+    <div className={`${styles.Cell} ${collapsed ? styles.Collapsed : ''}`}>
       {/*TODO - clean up the render toggle UX */}
-      {isMarkdownCell(props.node.cell) ? (
+      {isAMarkdownCell(props.node.cell) ? (
         <div className={styles.MarkdownRenderArea}>
           <Button
             small
@@ -48,16 +39,16 @@ export default function Cell(props: CellProps) {
           ) : null}
         </div>
       ) : null}
-      {isMarkdownCell(props.node.cell) && renderMarkdown ? null : (
+      {isAMarkdownCell(props.node.cell) && renderMarkdown ? null : (
         <div className={styles.CodeArea}>
           <CellEditor
             updateText={() => {
-              console.warn("updateText not implemented");
+              console.warn('updateText not implemented')
             }}
             cell={props.node.cell}
           ></CellEditor>
         </div>
       )}
     </div>
-  );
+  )
 }

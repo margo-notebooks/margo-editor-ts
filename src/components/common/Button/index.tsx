@@ -1,14 +1,18 @@
-import React from "react";
-import styles from "./Button.module.css";
+import React from 'react'
+import styles from './Button.module.css'
 
 export interface ButtonProps {
-  tooltipText?: string;
-  labelText?: string;
-  icon?: JSX.Element;
-  onClick: () => void;
-  small?: boolean;
+  tooltipText?: string
+  labelText?: string
+  icon?: JSX.Element
+  onClick: () => void
+  small?: boolean
 }
 
+/**
+ * Render an icon with a button and an optional text label
+ * @param props
+ */
 export default function Button(props: ButtonProps) {
   return (
     <button
@@ -18,5 +22,5 @@ export default function Button(props: ButtonProps) {
       <span>{props.icon}</span>
       <span className={styles.Label}>{props.labelText}</span>
     </button>
-  );
+  )
 }

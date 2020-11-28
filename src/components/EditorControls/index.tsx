@@ -3,19 +3,23 @@ import {
   faPlus,
   faSave,
   faTrash,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import Button from "../common/Button";
-import ControlBar from "../common/ControlBar";
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
+import Button from '../common/Button'
+import ControlBar from '../common/ControlBar'
 
 export interface EditorControlsProps {
-  handleReset: () => void;
-  handleAddNewCell: () => void;
-  handleRunNotebook: () => void;
-  handleSave: () => void;
+  handleReset: () => void
+  handleAddNewCell: () => void
+  handleRunNotebook: () => void
+  handleSave: () => void
 }
 
+/**
+ * Render notebook-level editor controls
+ * @param props
+ */
 export default function EditorControls(props: EditorControlsProps) {
   return (
     <div className="EditorControls">
@@ -38,5 +42,5 @@ export default function EditorControls(props: EditorControlsProps) {
         />
       </ControlBar>
     </div>
-  );
+  )
 }

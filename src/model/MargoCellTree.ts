@@ -1,8 +1,8 @@
-import { IMargoCellTreeInternalNode } from "./interfaces";
+import { IMargoNotebookParentNode } from "./interfaces";
 
 export default class MargoCellTree {
 
-    addCell(cell: IMargoCellTreeInternalNode) {
+    addCell(cell: IMargoNotebookParentNode) {
 
     }
 

@@ -1,21 +1,24 @@
-import { faCode, faMarker, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
-import { IMargoCellTreeNode } from "../../../model/interfaces";
-import Button from "../../common/Button";
-import ControlBar from "../../common/ControlBar";
-import Cell from "../Cell";
-import styles from "./CellWrapper.module.css";
+import { faCode, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faMarkdown } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
+import { IMargoNotebookNode } from '../../../model/interfaces'
+import Button from '../../common/Button'
+import Cell from '../Cell'
+import styles from './CellWrapper.module.css'
 
 export interface CellWrapperProps {
-  node: IMargoCellTreeNode;
-  handleDelete: () => void;
-  handleToggleCellType: () => void;
+  node: IMargoNotebookNode
+  handleDelete: () => void
+  handleToggleCellType: () => void
 }
 
+/**
+ * Render a cell plus its controls
+ * @param props
+ */
 const CellWrapper: React.FunctionComponent<CellWrapperProps> = (props) => {
-  const { node, handleDelete, handleToggleCellType } = props;
+  const { node, handleDelete, handleToggleCellType } = props
   return (
     <div className={styles.CellWrapper}>
       <div className={styles.CellControlBar}>
@@ -26,7 +29,6 @@ const CellWrapper: React.FunctionComponent<CellWrapperProps> = (props) => {
               <FontAwesomeIcon icon={faTrash} />
             </div>
           }
-          // labelText="Delete cell"
           small
         ></Button>
         <Button
@@ -34,7 +36,7 @@ const CellWrapper: React.FunctionComponent<CellWrapperProps> = (props) => {
           icon={
             <div>
               <FontAwesomeIcon
-                icon={node.cell.type === "code" ? faCode : faMarkdown}
+                icon={node.cell.type === 'code' ? faCode : faMarkdown}
               />
             </div>
           }
@@ -44,11 +46,11 @@ const CellWrapper: React.FunctionComponent<CellWrapperProps> = (props) => {
       <Cell
         node={node}
         handleDeleteCell={() => {
-          console.warn("TODO: Remove handleDeleteCell from Cell props");
+          console.warn('TODO: Remove handleDeleteCell from Cell props')
         }}
       />
     </div>
-  );
-};
+  )
+}
 
-export default CellWrapper;
+export default CellWrapper

@@ -1,125 +1,121 @@
-import React, { RefObject, useRef, useState } from "react";
+import React, { RefObject, useRef, useState } from 'react'
 import {
-  IMargoCellTree,
-  IMargoCellTreeInternalNode,
-  IMargoCellTreeNode,
-} from "../../model/interfaces";
-import addChildNodeToParent from "../../model/utils/addChildNodeToParent";
-import { addEmptyCell } from "../../model/utils/addNodeToTree";
-import { toggleCellType } from "../../model/utils/changeCellType";
-import cloneTree from "../../model/utils/cloneTree";
-import deleteNodeWithIDFromTree from "../../model/utils/deleteCellFromTree";
-import emptyCellTree from "../../model/utils/emptyCellTree";
-import emptyLeafNode from "../../model/utils/emptyLeafNode";
-// import getCellID from "../../model/utils/getCellID";
-import getNodeByCellID from "../../model/utils/getNodeByCellID";
-import { moveNodeWithinTree } from "../../model/utils/moveNode";
-import treeToNotebook from "../../model/utils/treeToNotebook";
-import CellTree from "../CellTree";
-import EditorControls from "../EditorControls";
+  IMargoNotebook,
+  IMargoNotebookParentNode,
+  IMargoNotebookNode,
+} from '../../model/interfaces'
+import { addEmptyParentNodeToNotebook } from '../../model/api/addParentNode'
+import { toggleCellType } from '../../model/api/toggleCellType'
+import { cloneNotebook } from '../../model/api/cloneNotebook'
+import deleteNode from '../../model/api/deleteNode'
+import createEmptyMargoNotebook from '../../model/api/createEmptyCellTree'
+import createEmptyChildNode from '../../model/api/createEmptyChildNode'
+import { moveNodeWithinTree } from '../../model/api/moveNode'
+import { convertToJupyter } from '../../model/api/convertToJupyter'
+import CellTree from '../CellTree'
+import EditorControls from '../EditorControls'
+import { addChildNodeToParent } from '../../model/api/addChildNode'
 
+/**
+ * This is the  main component of the Margo editor app. Renders the
+ * notebook-level controls and all of the cells that comprise the notebook.
+ */
 export default function Editor() {
-  const [cellTree, updateCellTree] = useState<IMargoCellTree>(emptyCellTree());
+  const [margoNotebook, updateMargoNotebook] = useState<IMargoNotebook>(
+    createEmptyMargoNotebook()
+  )
   const [notebookName, updateNotebookName] = useState<string>(
-    "Untitled Notebook"
-  );
+    'Untitled Notebook'
+  )
+  const notebookNameRef: RefObject<HTMLDivElement> = useRef(null)
 
-  const notebookNameRef: RefObject<HTMLDivElement> = useRef(null);
+  /**
+   * Toggle a node's cell between markdown and code type cells
+   * @param node
+   */
+  const handleToggleCellType = (node: IMargoNotebookNode) => {
+    node.cell = toggleCellType(node.cell)
+    updateMargoNotebook((oldTree) => cloneNotebook(oldTree))
+  }
 
-  const handleToggleCellType = (node: IMargoCellTreeNode) => {
-    node.cell = toggleCellType(node.cell);
-    updateCellTree((oldTree) => cloneTree(oldTree));
-  };
+  /**
+   * Add a new cell to the notebook
+   */
+  const addNewParentNode = () => {
+    updateMargoNotebook((oldTree) =>
+      addEmptyParentNodeToNotebook(cloneNotebook(oldTree))
+    )
+  }
 
-  const addNewCell = () => {
-    updateCellTree((oldTree) => {
-      const newTree = cloneTree(oldTree);
-      addEmptyCell(newTree);
-      return newTree;
-    });
-  };
+  /**
+   * Move a cell up one position within its level in the tree
+   * @param node
+   */
+  const moveNodeUp = (node: IMargoNotebookNode) => {
+    updateMargoNotebook((oldTree) => moveNodeWithinTree(oldTree, node, 'up'))
+  }
 
-  const moveCellUp = (node: IMargoCellTreeNode) => {
-    updateCellTree((oldTree) => moveNodeWithinTree(oldTree, node, "up"));
-  };
+  /**
+   * Move cell down one position within its level in the three
+   * @param node
+   */
+  const moveNodeDown = (node: IMargoNotebookNode) => {
+    updateMargoNotebook((oldTree) => moveNodeWithinTree(oldTree, node, 'down'))
+  }
 
-  const moveCellDown = (node: IMargoCellTreeNode) => {
-    updateCellTree((oldTree) => moveNodeWithinTree(oldTree, node, "down"));
-  };
-
+  /**
+   * Save the notebook as a .margo.ipynb file
+   */
   const saveAsNotebook = () => {
-    console.log("saveAsNotebook() called");
-    console.log(treeToNotebook(cellTree).toJSON());
+    console.log(convertToJupyter(margoNotebook).toJSON())
 
-    const storageObj = treeToNotebook(cellTree);
+    const storageObj = convertToJupyter(margoNotebook)
 
     var dataStr =
-      "data:text/json;charset=utf-8," +
-      encodeURIComponent(JSON.stringify(storageObj));
-    var dlAnchorElem = document.createElement("a");
-    dlAnchorElem.setAttribute("href", dataStr);
-    dlAnchorElem.setAttribute("download", `${notebookName}.ipynb`);
-    dlAnchorElem.click();
-  };
+      'data:text/json;charset=utf-8,' +
+      encodeURIComponent(JSON.stringify(storageObj))
+    var dlAnchorElem = document.createElement('a')
+    dlAnchorElem.setAttribute('href', dataStr)
+    dlAnchorElem.setAttribute('download', `${notebookName}.ipynb`)
+    dlAnchorElem.click()
+  }
 
-  const addChildCell = (parentCellID: string) => {
-    console.log("AddChildCell() called");
-    const newTree = cloneTree(cellTree);
+  /**
+   * Add a child cell to a give parent node's cell
+   * @param parentCellID
+   */
+  const addChildNode = (parentNode: IMargoNotebookParentNode) => {
+    const newTree = cloneNotebook(margoNotebook)
+    const childNode = createEmptyChildNode(
+      parentNode as IMargoNotebookParentNode
+    )
 
-    const parentNode = getNodeByCellID(newTree.cells, parentCellID);
-    if (!parentNode) {
-      console.warn("addChildCell: parent not found");
-      return;
-    }
-    if (!parentNode.hasOwnProperty("children")) {
-      console.warn("parentNode not a parent");
-      return;
-    }
-    // const childNode = emptyLeafNode(parentCellID);
-    const childNode = emptyLeafNode(parentNode as IMargoCellTreeInternalNode);
+    addChildNodeToParent(parentNode as IMargoNotebookParentNode, childNode)
 
-    // childNode.cell.value.text =
-    //   childNode.cell.value.text +
-    //   `# :: rel.childOf: "${getCellID(parentNode)}" ::\n`;
+    updateMargoNotebook(newTree)
+  }
 
-    addChildNodeToParent(parentNode as IMargoCellTreeInternalNode, childNode);
+  /**
+   * Delete a cell from the tree by id
+   * @param cellID
+   */
+  const deleteCell = (node: IMargoNotebookNode) => {
+    updateMargoNotebook((oldTree) => deleteNode(cloneNotebook(oldTree), node))
+  }
 
-    // addNewChildNodeToParentWithId(newTree, parentCellID);
-    updateCellTree(newTree);
-
-    // TODO - Figure out why the below approach fails (generates two)
-    // new cells each time. For now, the approach above works just fine
-
-    // updateCellTree((oldTree) => {
-    //   const newTree = cloneTree(oldTree);
-    //   console.log(new Date(), "Adding child cell to parent cell", parentCellID);
-
-    //   addNewChildNodeToParentWithId(newTree, parentCellID);
-
-    //   return newTree;
-    // });
-  };
-
-  const deleteCell = (cellID: string) => {
-    console.log("deleteCell() called", cellID);
-    updateCellTree((oldTree) => {
-      const newTree = deleteNodeWithIDFromTree(cloneTree(oldTree), cellID);
-
-      return newTree;
-    });
-  };
-
+  /**
+   * Reset the cell tree
+   */
   const reset = () => {
-    console.log("reset() called");
-    updateCellTree(emptyCellTree());
-  };
+    updateMargoNotebook(createEmptyMargoNotebook())
+  }
 
+  /**
+   * Run the notebook
+   */
   const run = () => {
-    console.log("run() called");
-    console.error("run not implemented");
-  };
-
-  console.log("Rendering with cellTree", cellTree.cells.length, cellTree);
+    console.error('run() not implemented')
+  }
 
   return (
     <div className="MargoEditor">
@@ -130,8 +126,8 @@ export default function Editor() {
             contentEditable
             onBlur={() => {
               updateNotebookName(
-                notebookNameRef.current?.innerText || "Untitled Notebook"
-              );
+                notebookNameRef.current?.innerText || 'Untitled Notebook'
+              )
             }}
           >
             {notebookName}
@@ -143,18 +139,18 @@ export default function Editor() {
       </div>
       <EditorControls
         handleRunNotebook={run}
-        handleAddNewCell={addNewCell}
+        handleAddNewCell={addNewParentNode}
         handleReset={reset}
         handleSave={saveAsNotebook}
       />
       <CellTree
         handleToggleCellType={handleToggleCellType}
-        handleMoveCellUp={moveCellUp}
-        handleMoveCellDown={moveCellDown}
+        handleMoveCellUp={moveNodeUp}
+        handleMoveCellDown={moveNodeDown}
         handleDeleteCell={deleteCell}
-        handleAddChildCell={addChildCell}
-        cellTree={cellTree}
+        handleAddChildCell={addChildNode}
+        margoNotebook={margoNotebook}
       />
     </div>
-  );
+  )
 }

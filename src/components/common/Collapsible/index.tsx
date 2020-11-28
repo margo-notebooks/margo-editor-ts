@@ -1,19 +1,22 @@
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import React, { useState } from "react";
-import CollapserButton from "./CollapserButton";
-import styles from "./Collapsible.module.css";
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import React, { useState } from 'react'
+import CollapserButton from './CollapserButton'
+import styles from './Collapsible.module.css'
 
 export interface CollapsibleProps {
-  collapsedLabel: string;
-  openLabel?: string;
-  icon?: IconDefinition;
+  collapsedLabel: string
+  openLabel?: string
+  icon?: IconDefinition
 }
 
+/**
+ * Render children inside a collapsible frame
+ * @param props
+ */
 const Collapsible: React.FunctionComponent<CollapsibleProps> = (props) => {
-  const [open, setOpen] = useState<boolean>(true);
-  const { icon, collapsedLabel, children } = props;
-  // const { collapsedLabel: label } = props;
-  const label = collapsedLabel;
+  const [open, setOpen] = useState<boolean>(true)
+  const { icon, collapsedLabel, children } = props
+  const label = collapsedLabel
   return (
     <div
       className={`${styles.Collapsible} ${open ? styles.Open : styles.Closed}`}
@@ -37,7 +40,7 @@ const Collapsible: React.FunctionComponent<CollapsibleProps> = (props) => {
         <div className={styles.ChildArea}>{children}</div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Collapsible;
+export default Collapsible
