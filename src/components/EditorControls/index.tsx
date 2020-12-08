@@ -25,18 +25,22 @@ export default function EditorControls(props: EditorControlsProps) {
     <div className="EditorControls">
       <ControlBar>
         <Button
+          small
           onClick={props.handleAddNewCell}
           icon={<FontAwesomeIcon icon={faPlus} />}
         />
         <Button
+          small
           onClick={props.handleReset}
           icon={<FontAwesomeIcon icon={faTrash} />}
         />
         <Button
+          small
           onClick={props.handleRunNotebook}
           icon={<FontAwesomeIcon icon={faPlay} />}
         />
         <Button
+          small
           onClick={props.handleSave}
           icon={<FontAwesomeIcon icon={faSave} />}
         />

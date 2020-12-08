@@ -15,6 +15,9 @@ import { convertToJupyter } from '../../model/api/convertToJupyter'
 import CellTree from '../CellTree'
 import EditorControls from '../EditorControls'
 import { addChildNodeToParent } from '../../model/api/addChildNode'
+import styles from './Editor.module.css'
+import NameEditor from './NameEditor'
+import Spacer from '../common/Spacer'
 
 /**
  * This is the  main component of the Margo editor app. Renders the
@@ -118,31 +121,20 @@ export default function Editor() {
   }
 
   return (
-    <div className="MargoEditor">
-      <div>
-        <h3>
-          <span
-            ref={notebookNameRef}
-            contentEditable
-            onBlur={() => {
-              updateNotebookName(
-                notebookNameRef.current?.innerText || 'Untitled Notebook'
-              )
-            }}
-          >
-            {notebookName}
-          </span>
-          <span>
-            <small>.margo.ipynb</small>
-          </span>
-        </h3>
-      </div>
+    <div className={styles.Editor}>
+      <NameEditor
+        notebookName={notebookName}
+        notebookNameRef={notebookNameRef}
+        updateNotebookName={updateNotebookName}
+      />
+      <Spacer height={20} />
       <EditorControls
         handleRunNotebook={run}
         handleAddNewCell={addNewParentNode}
         handleReset={reset}
         handleSave={saveAsNotebook}
       />
+      <Spacer height={30} />
       <CellTree
         handleToggleCellType={handleToggleCellType}
         handleMoveCellUp={moveNodeUp}

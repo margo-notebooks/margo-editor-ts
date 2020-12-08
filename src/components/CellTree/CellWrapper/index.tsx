@@ -32,6 +32,7 @@ const CellWrapper: React.FunctionComponent<CellWrapperProps> = (props) => {
           small
         ></Button>
         <Button
+          small
           onClick={handleToggleCellType}
           icon={
             <div>

@@ -1,65 +1,65 @@
-import { ICellModel } from "@jupyterlab/cells";
-import Measure from "react-measure";
+import { ICellModel } from '@jupyterlab/cells'
+import Measure from 'react-measure'
 
-import React, { RefObject, useEffect, useRef, useState } from "react";
-import * as monaco from "monaco-editor";
-import getNewEditor, { updateSize } from "./utils/getNewEditor";
-import styles from "./CellEditor.module.css";
+import React, { RefObject, useEffect, useRef, useState } from 'react'
+import * as monaco from 'monaco-editor'
+import getNewEditor, { updateSize } from './utils/getNewEditor'
+import styles from './CellEditor.module.css'
 
 export interface CellEditorProps {
-  cell: ICellModel;
-  updateText: (text: string) => void;
+  cell: ICellModel
+  updateText: (text: string) => void
 }
 
 export default function CellEditor(props: CellEditorProps) {
-  const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor>();
-  const ref: RefObject<HTMLDivElement> = useRef(null);
-  const [width, setWidth] = useState<number>(-1);
+  const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor>()
+  const ref: RefObject<HTMLDivElement> = useRef(null)
+  const [width, setWidth] = useState<number>(-1)
 
-  const { cell } = props;
+  const { cell } = props
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current) return
 
-    console.log("Creating a new editor with text", cell.value.text);
+    console.log('Creating a new editor with text', cell.value.text)
     // create a new editor
-    const current = ref.current;
+    const current = ref.current
     const newEditor = getNewEditor(
       ref.current,
       cell.value.text,
-      cell.metadata.get("language")?.toString() || "python-x",
+      cell.metadata.get('language')?.toString() || 'python-x',
       () => {
-        const editorText = newEditor.getValue().toString();
+        const editorText = newEditor.getValue().toString()
         // updateText(editorText);
-        props.cell.value.text = editorText;
-        updateSize(current, newEditor);
+        props.cell.value.text = editorText
+        updateSize(current, newEditor)
       }
-    );
-    setEditor(newEditor);
+    )
+    setEditor(newEditor)
 
     return () => {
-      current.innerHTML = "";
+      current.innerHTML = ''
       // TODO - evaluate this cleanup routine. Esepcially unsetting the editor
-      setEditor(undefined);
-    };
-  }, [cell.metadata, cell.value.text, props.cell.value, ref]);
+      setEditor(undefined)
+    }
+  }, [cell.metadata, cell.value.text, props.cell.value, ref])
 
   /**
    * Auto-update the width
    */
   useEffect(() => {
-    if (!ref.current) return;
-    if (!editor) return;
-    updateSize(ref.current, editor);
-  }, [ref, width, editor]);
+    if (!ref.current) return
+    if (!editor) return
+    updateSize(ref.current, editor)
+  }, [ref, width, editor])
 
   return (
     <Measure
       bounds
       onResize={(contentRect) => {
-        console.log("resize captured", contentRect);
+        console.log('resize captured', contentRect)
         if (contentRect.bounds) {
-          setWidth(contentRect.bounds?.width);
+          setWidth(contentRect.bounds?.width)
         }
       }}
     >
@@ -69,5 +69,5 @@ export default function CellEditor(props: CellEditorProps) {
         </div>
       )}
     </Measure>
-  );
+  )
 }

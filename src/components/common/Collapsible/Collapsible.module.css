@@ -1,5 +1,5 @@
 .Collapsible {
-    display: flex
+    display: flex;
 }
 
 .Contents{
@@ -8,10 +8,6 @@
 
 .Collapsible.Closed .ChildArea {
     display: none;
-}
-
-.ChildArea {
-    /* border-left: 10px solid black; */
 }
 
 .ControlArea {
@@ -33,27 +29,32 @@
 
 .ConnectorEdgeInner {
     height: 100%;
-    width: 50%;
-    border-right: 1px dotted #efefef;
-    transition: border-color 0.5s ease-in;
+    width: calc(50% + -0.5px);
+    border-right: 1px dotted #999;
+    /* transition: border-width 0.25s ease-in; */
 
 }
 
-.Collapsible:hover .ConnectorEdgeInner {
-    border-color: black;
+.Collapsible .ControlArea:hover .ConnectorEdgeInner {
+    border-right: 1px dotted #222;
+    /* width: calc(50% - 0.75px) */
 }
 
 .Collapsible.Open .Label {
-    background-color: black;
+    background-color: #222;
     color: white;
+
 }
 
 .Collapsible.Closed .Label{
     background-color: white;
     color: black;
+
+    border-color: black;
 }
+
 .Label {
-    transition: background-color 0.5s ease;
+    transition: all 0.5s ease;
     font-size: 0.5em;
     font-weight: 900;
     height: 1em;
@@ -66,4 +67,5 @@
     border-radius: 0.5em;
     display: inline-block;
     margin-left: 1em;
+    border: 1px solid transparent;
 }

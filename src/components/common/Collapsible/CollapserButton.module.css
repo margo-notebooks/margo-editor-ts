@@ -1,7 +1,13 @@
 .CollapserButton {
     transition: transform 0.2s ease-in;
-
+    color: #999;
+    cursor: pointer;
 }
+
+.CollapserButton:hover{
+    color: black;
+}
+
 .CollapserButton.Open{
     transform: rotate(90deg);
 }
