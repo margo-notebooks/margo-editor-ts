@@ -1,0 +1,82 @@
+.SelectPlusGroup{
+    display: flex;
+}
+
+.SelectPlusGroup .Title{
+    font-weight: 900;
+    padding-right: 2px;
+
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+    color: #555;
+}
+
+.SelectPlusWrapper{
+    position: relative;
+    width: 60px;
+    height: 14px;
+    overflow: hidden;
+    transition: unset;
+}
+
+.SelectPlusWrapper:hover{
+    height: unset;
+    overflow: unset;
+}
+
+.SelectPlus{
+    cursor: pointer;
+    position: absolute;
+    background-color: white;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    transition: all 0.5s ease-out;
+}
+
+.SelectPlus:hover .SelectPlusItem {
+    border: 1px solid gray;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+}
+
+.SelectPlus:hover .SelectPlusItem:first-child {
+    border-top-width: 1px;
+}
+
+.SelectPlus:hover .SelectPlusItem:last-child {
+    border-bottom-width: 1px;
+}
+
+.SelectPlusItem {
+    padding: 3px;
+    user-select: none;
+    border: 1px solid transparent;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.SelectPlusItem:hover{
+    color: hotpink;
+    border-color: #eee;
+
+    white-space: unset;
+
+}
+
+.SelectPlusItem.ButtonContainer:hover{
+    background-color: unset;
+}
+
+.CenterButton{
+    text-align: center;
+    margin: 0;
+}
+
+.CenterButton:hover{
+    background-color: white;
+}

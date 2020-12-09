@@ -11,6 +11,7 @@ export interface CellWrapperProps {
   node: IMargoNotebookNode
   handleDelete: () => void
   handleToggleCellType: () => void
+  controls?: JSX.Element
 }
 
 /**
@@ -22,6 +23,7 @@ const CellWrapper: React.FunctionComponent<CellWrapperProps> = (props) => {
   return (
     <div className={styles.CellWrapper}>
       <div className={styles.CellControlBar}>
+        {props.controls}
         <Button
           onClick={handleDelete}
           icon={

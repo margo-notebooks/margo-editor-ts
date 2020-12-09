@@ -19,6 +19,7 @@ export interface CollapsibleCellProps {
   handleMoveCellUp: () => void
   handleMoveCellDown: () => void
   handleToggleCellType: () => void
+  controls?: JSX.Element
   label: string
 }
 
@@ -27,7 +28,7 @@ export interface CollapsibleCellProps {
  * @param props
  */
 const CollapsibleCell: React.FunctionComponent<CollapsibleCellProps> = (
-  props: CollapsibleCellProps
+  props
 ) => {
   const {
     node,
@@ -67,6 +68,7 @@ const CollapsibleCell: React.FunctionComponent<CollapsibleCellProps> = (
             </div>
             <div className={styles.CellFlexContainer}>
               <CellWrapper
+                controls={props.controls}
                 handleToggleCellType={handleToggleCellType}
                 handleDelete={handleDeleteCell}
                 node={node}
