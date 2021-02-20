@@ -1,3 +1,3 @@
-# Getting Started with Create React App
+# Margo Editor
 
 Reference implementation of a Margo noteboook editor.
